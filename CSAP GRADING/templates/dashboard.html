@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CampusAI Hub | CSAP</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="side-brand">
+      <div class="logo-frame"><img src="{{ url_for('static', filename='school_logo.png') }}" alt="CSAP logo"></div>
+      <div><b>Campus<span>AI</span></b><small>CSAP Academic Hub</small></div>
+    </div>
+
+    <div class="profile-strip">
+      <div class="avatar">{{ user['name'][0] }}</div>
+      <div><b>{{ user['name'] }}</b><small>{{ user['role']|capitalize }} workspace</small></div>
+    </div>
+
+    <div class="side-section">MAIN</div>
+    <button class="nav active" data-page="overview"><span>⌂</span>Dashboard</button>
+    <button class="nav" data-page="students"><span>♙</span>Student Intelligence</button>
+    <button class="nav" data-page="predict"><span>⌁</span>Predictive Analytics <em>AI</em></button>
+    <button class="nav" data-page="ai"><span>✦</span>Generative Assistant <em>AI</em></button>
+
+    <div class="side-section">MANAGEMENT</div>
+    {% if user['role'] == 'teacher' %}
+    <button class="nav" data-page="records"><span>▣</span>Academic Records</button>
+    {% endif %}
+    <button class="nav" data-page="about"><span>ⓘ</span>About CampusAI</button>
+
+    <div class="side-spacer"></div>
+    <div class="ai-status-card">
+      <div class="status-orb">✦</div>
+      <div><b>AI systems online</b><small>Predictive + Generative</small></div>
+      <i></i>
+    </div>
+    <div class="side-footer">
+      <span>CSAP</span>
+      <div><b>Colegio de San Antonio de Padua</b><small>Guinsay, Danao City · Since 2004</small></div>
+    </div>
+  </aside>
+
+  <div class="content">
+    <header class="topbar">
+      <div class="mobile-brand"><img src="{{ url_for('static', filename='school_logo.png') }}"><b>CampusAI</b></div>
+      <div class="crumbs"><span>CSAP ACADEMIC HUB</span><i>/</i><b id="crumb">Dashboard</b></div>
+      <div class="top-actions">
+        <div class="system-time" id="systemTime">--:--</div>
+        <div class="status-dot"><i></i> All systems operational</div>
+        <div class="user-chip"><div class="avatar">{{ user['name'][0] }}</div><div><b>{{ user['name'] }}</b><small>{{ user['role']|capitalize }}</small></div></div>
+        <a class="logout" href="{{ url_for('logout') }}">Sign out</a>
+      </div>
+    </header>
+
+    <main class="main">
+      <section id="overview" class="page active">
+        <div class="page-heading">
+          <div><div class="eyebrow">COLEGIO DE SAN ANTONIO DE PADUA</div><h1>Student Success Dashboard</h1><p>Monitor academic signals, explore AI predictions, and move from insight to support.</p><div class="heading-meta"><span>● Live academic workspace</span><span>CSAP · Academic Year 2026–2027</span></div></div>
+          <button class="btn btn-primary" onclick="showPage('ai')">✦ Open CampusAI</button>
+        </div>
+
+        <div class="hero-card">
+          <div class="hero-copy"><span class="hero-tag">PREDICTIVE + GENERATIVE AI</span><h2>Turn academic data into timely support.</h2><p>CampusAI combines an explainable prediction layer with a generative assistant so teachers can spot signals earlier and students can get practical next steps.</p><div class="hero-actions"><button class="btn btn-light" onclick="showPage('predict')">Explore predictions →</button><button class="btn btn-ghost-light" onclick="showPage('ai')">Ask the AI</button></div></div>
+          <div class="hero-orbit"><div class="orbit-ring"></div><div class="orbit-core">✦</div><span class="orbit-label label-one">PREDICT</span><span class="orbit-label label-two">EXPLAIN</span><span class="orbit-label label-three">SUPPORT</span></div>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card"><div class="stat-icon purple">♙</div><span>STUDENTS</span><strong id="statStudents">—</strong><small>Academic profiles</small></div>
+          <div class="stat-card"><div class="stat-icon blue">⌁</div><span>AVG. PREDICTED</span><strong id="statAverage">—</strong><small>Model outlook</small></div>
+          <div class="stat-card"><div class="stat-icon amber">!</div><span>EARLY WARNING</span><strong id="statRisk">—</strong><small>High / critical signals</small></div>
+          <div class="stat-card"><div class="stat-icon green">✦</div><span>AI LAYERS</span><strong>02</strong><small>Predictive + Generative</small></div>
+        </div>
+
+        <div class="quick-actions">
+          <div><span class="qa-icon">⌁</span><div><b>Run a prediction</b><small>Analyze a student profile</small></div><button onclick="showPage('students')">Open →</button></div>
+          <div><span class="qa-icon">✦</span><div><b>Ask CampusAI</b><small>Generate an explanation or plan</small></div><button onclick="showPage('ai')">Open →</button></div>
+          {% if user['role'] == 'teacher' %}
+          <div><span class="qa-icon">▣</span><div><b>Update records</b><small>Refresh academic indicators</small></div><button onclick="showPage('records')">Open →</button></div>
+          {% endif %}
+        </div>
+
+        <div class="section-grid">
+          <div class="panel">
+            <div class="panel-head"><div><div class="eyebrow">AI WORKFLOW</div><h3>From signal to action</h3></div><span class="pill">Human-in-the-loop</span></div>
+            <div class="workflow-new">
+              <div><b>01</b><span>COLLECT</span><strong>Academic indicators</strong><small>Attendance, study, quizzes and grades</small></div>
+              <div><b>02</b><span>PREDICT</span><strong>Performance outlook</strong><small>Score, risk and confidence</small></div>
+              <div><b>03</b><span>GENERATE</span><strong>Personalized support</strong><small>Plans, explanations and messages</small></div>
+              <div><b>04</b><span>REVIEW</span><strong>Teacher action</strong><small>Human judgment stays central</small></div>
+            </div>
+          </div>
+          <div class="panel insight-panel">
+            <div class="panel-head"><div><div class="eyebrow">COHORT SNAPSHOT</div><h3>Early-warning distribution</h3></div></div>
+            <div id="riskBars" class="risk-bars"></div>
+            <div class="model-health"><span><i></i> Prediction engine</span><b>READY</b><span><i></i> Generative layer</span><b>READY</b></div><p class="tiny-note">Risk is an academic early-warning signal, not a diagnosis or automatic decision.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="students" class="page">
+        <div class="page-heading"><div><div class="eyebrow">STUDENT INTELLIGENCE</div><h1>Student Profiles</h1><p>Open a profile to see indicators, prediction factors, and suggested support.</p></div></div>
+        <div class="student-layout-new">
+          <div class="panel student-browser">
+            <div class="search-box">⌕ <input id="studentSearch" oninput="filterStudents()" placeholder="Search student, course, year..."></div>
+            <div id="studentList"></div>
+          </div>
+          <div id="studentDetail" class="panel detail-empty"><div class="empty-state-icon">♙</div><h2>Select a student</h2><p>Choose a profile to inspect academic signals.</p></div>
+        </div>
+      </section>
+
+      <section id="predict" class="page">
+        <div class="page-heading"><div><div class="eyebrow">MACHINE LEARNING LAYER</div><h1>Predictive AI Lab</h1><p>An explainable, demonstration model for academic performance and early-warning signals.</p></div><span class="model-status"><i></i> MODEL ONLINE</span></div>
+        <div class="predict-grid">
+          <div class="panel">
+            <div class="ai-title"><div class="big-ai-icon">⌁</div><div><span class="eyebrow">PREDICTIVE ENGINE</span><h2>Academic performance model</h2></div></div>
+            <p>The model combines five measurable indicators. Each factor has a visible weight so the prediction can be explained to a teacher or student.</p>
+            <div class="weight-list">
+              <div><span>Previous grade</span><b>25%</b><i><u style="width:25%"></u></i></div>
+              <div><span>Attendance</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Assignments</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Quizzes</span><b>20%</b><i><u style="width:20%"></u></i></div>
+              <div><span>Study time</span><b>15%</b><i><u style="width:15%"></u></i></div>
+            </div>
+            <button class="btn btn-primary" onclick="showPage('students')">Run a student prediction →</button>
+          </div>
+          <div class="panel model-explain">
+            <div class="eyebrow">WHAT THE OUTPUT MEANS</div>
+            <div class="explain-row"><span class="explain-dot low"></span><div><b>Low risk</b><small>Strong current outlook</small></div></div>
+            <div class="explain-row"><span class="explain-dot mod"></span><div><b>Moderate risk</b><small>Watch and support</small></div></div>
+            <div class="explain-row"><span class="explain-dot high"></span><div><b>High risk</b><small>Prioritize intervention</small></div></div>
+            <div class="explain-row"><span class="explain-dot critical"></span><div><b>Critical</b><small>Prompt human review</small></div></div>
+            <div class="callout">⚑ <span>Predictions are decision-support signals. A teacher should verify context before taking action.</span></div>
+          </div>
+        </div>
+        <div class="panel architecture">
+          <div><div class="eyebrow">CAPSTONE ARCHITECTURE</div><h3>How the two AI layers work together</h3></div>
+          <div class="architecture-flow"><div><b>Student data</b><small>Academic indicators</small></div><span>→</span><div class="highlight"><b>Predictive AI</b><small>Score + risk + factors</small></div><span>→</span><div class="highlight green-box"><b>Generative AI</b><small>Plan + explanation + message</small></div><span>→</span><div><b>Human action</b><small>Teacher / student support</small></div></div>
+        </div>
+      </section>
+
+      <section id="ai" class="page">
+        <div class="page-heading"><div><div class="eyebrow">GENERATIVE INTELLIGENCE</div><h1>CampusAI Assistant</h1><p>Generate explanations, study plans, and student-support messages from natural-language prompts.</p></div><span class="model-status gen"><i></i> GENERATIVE LAYER READY</span></div>
+        <div class="ai-layout-new">
+          <div class="panel chat-panel">
+            <div class="chat-top"><div class="assistant-avatar">✦</div><div><b>CampusAI Assistant</b><small>Academic support copilot</small></div><span class="online">Online</span></div>
+            <div id="messages" class="messages"><div class="message ai"><div class="msg-avatar">✦</div><div><b>CampusAI</b><p>Hello! I can explain the Predictive AI, explain student-risk signals, create study strategies, or help you present this capstone.</p></div></div></div>
+            <div class="quick"><button onclick="quick('Explain Predictive AI in this project')">Explain Predictive AI</button><button onclick="quick('Explain Generative AI in this project')">Explain Generative AI</button><button onclick="quick('How does this system work?')">System workflow</button><button onclick="quick('Give me an exam study strategy')">Study strategy</button></div>
+            <div class="composer"><textarea id="chatInput" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendChat()}" placeholder="Ask CampusAI anything..."></textarea><button onclick="sendChat()">➤</button></div>
+          </div>
+          <div class="side-tools">
+            <div class="panel generator-card"><div class="eyebrow">GENERATIVE TOOL</div><h3>Study plan generator</h3><p>Give the AI a topic and available hours. It creates a structured practice plan.</p><label>Topic<input id="topic" placeholder="e.g. Python programming"></label><label>Hours per week<input id="hours" type="number" min="1" max="20" value="6"></label><button class="btn btn-primary btn-full" onclick="makePlan()">Generate plan ✦</button><div id="planout"></div></div>
+            <div class="panel"><div class="eyebrow">PRESENTATION TIP</div><h3>Explain the AI simply</h3><p><b>Predictive AI</b> estimates what may happen from existing data. <b>Generative AI</b> creates useful new content from a prompt.</p></div>
+          </div>
+        </div>
+      </section>
+
+
+      <section id="about" class="page">
+        <div class="page-heading">
+          <div><div class="eyebrow">ABOUT THE CAPSTONE</div><h1>CampusAI Hub</h1><p>A focused academic intelligence system designed for Colegio de San Antonio de Padua.</p></div>
+        </div>
+        <div class="about-hero">
+          <div class="about-logo"><img src="{{ url_for('static', filename='school_logo.png') }}" alt="CSAP"></div>
+          <div><div class="eyebrow">COLEGIO DE SAN ANTONIO DE PADUA</div><h2>Technology that supports better academic decisions.</h2><p>CampusAI brings together academic data, an explainable predictive layer, and a generative assistant in one organized workspace.</p></div>
+        </div>
+        <div class="about-grid">
+          <div class="panel"><div class="feature-icon purple">⌁</div><div class="eyebrow">01 · PREDICTIVE AI</div><h3>Early-warning intelligence</h3><p>Estimates academic outlook from attendance, study time, assignments, quizzes, and previous performance. Every result includes visible contributing factors.</p></div>
+          <div class="panel"><div class="feature-icon green">✦</div><div class="eyebrow">02 · GENERATIVE AI</div><h3>Personalized academic support</h3><p>Creates explanations, study plans, and intervention messages that turn analytical signals into practical next steps.</p></div>
+          <div class="panel"><div class="feature-icon amber">♙</div><div class="eyebrow">03 · HUMAN-IN-THE-LOOP</div><h3>Teacher remains in control</h3><p>AI provides decision support. Teachers review context, speak with students, and decide what action is appropriate.</p></div>
+        </div>
+        <div class="panel capstone-note"><div><div class="eyebrow">FOR PRESENTATION</div><h3>How to explain the system in one sentence</h3><p><b>“CampusAI predicts academic risk from student data, then uses Generative AI to create personalized support while keeping the teacher in the decision loop.”</b></p></div><div class="presentation-badge">PREDICT<br>↓<br>GENERATE<br>↓<br>SUPPORT</div></div>
+      </section>
+
+      {% if user['role'] == 'teacher' %}
+      <section id="records" class="page">
+        <div class="page-heading"><div><div class="eyebrow">TEACHER CONTROL CENTER</div><h1>Academic Records</h1><p>Update demonstration data and immediately see the predictive model respond.</p></div></div>
+        <div class="record-grid">
+          <div class="panel">
+            <div class="form-grid">
+              <label>Student<select id="sid"></select></label>
+              <label>Attendance %<input id="a" type="number" min="0" max="100" value="90"></label>
+              <label>Study hours / week<input id="st" type="number" min="0" max="30" value="8"></label>
+              <label>Assignments %<input id="ass" type="number" min="0" max="100" value="85"></label>
+              <label>Quiz %<input id="q" type="number" min="0" max="100" value="82"></label>
+              <label>Previous grade %<input id="pr" type="number" min="0" max="100" value="84"></label>
+            </div>
+            <button class="btn btn-primary" onclick="saveRecord()">Save academic record</button><span id="saved" class="success"></span>
+          </div>
+          <div class="panel">
+            <div class="eyebrow">DATA PIPELINE</div><h3>Live model feedback</h3>
+            <div class="data-points"><div><span>Input</span><b>5 indicators</b></div><div><span>Model</span><b>Explainable weights</b></div><div><span>Output</span><b>Score + risk</b></div><div><span>Support</span><b>AI-generated actions</b></div></div>
+          </div>
+        </div>
+      </section>
+      {% endif %}
+    </main>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

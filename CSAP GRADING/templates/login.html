@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CampusAI Hub | CSAP</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-page">
+  <div class="login-glow glow-a"></div><div class="login-glow glow-b"></div>
+  <main class="login-shell">
+    <section class="login-brand-block">
+      <div class="school-mark"><img src="{{ url_for('static', filename='school_logo.png') }}" alt="CSAP logo"></div>
+      <div>
+        <div class="brand-overline">ACADEMIC INTELLIGENCE PLATFORM</div>
+        <h1>Campus<span>AI</span> Hub</h1>
+        <p>{{ school.name }} · {{ school.location }}</p>
+      </div>
+    </section>
+    <section class="login-card">
+      <div class="eyebrow">SECURE DEMO ACCESS</div>
+      <h2>Welcome back.</h2>
+      <p class="muted">Sign in to explore predictive insights and generative academic support.</p>
+      {% if error %}<div class="alert">{{ error }}</div>{% endif %}
+      <form method="post" class="login-form">
+        <label>Username<input name="username" autocomplete="username" placeholder="teacher or student" required></label>
+        <label>Password<input name="password" type="password" autocomplete="current-password" placeholder="Enter password" required></label>
+        <button class="btn btn-primary btn-full" type="submit">Enter CampusAI <span>→</span></button>
+      </form>
+      <div class="demo-credentials">
+        <div><strong>Demo accounts</strong><span>For presentation/testing</span></div>
+        <div class="credential-row"><code>teacher</code><code>teacher123</code><span>Teacher</span></div>
+        <div class="credential-row"><code>student</code><code>student123</code><span>Student</span></div>
+      </div>
+    </section>
+    <footer>Predictive AI <i>•</i> Generative AI <i>•</i> Human-centered Student Success</footer>
+  </main>
+</body>
+</html>
